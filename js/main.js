@@ -41,7 +41,7 @@ $(window).on("load", function() {
         engine.start();
     });
 
-    display.tile_sheet.image.src = "/img/spritesheet.png";
+    display.tile_sheet.image.src = "./img/spritesheet.png";
 
     $(window).on("keydown keyup", keyDownUp);
     // $(window).on("resize", resize);
