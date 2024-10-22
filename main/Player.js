@@ -52,6 +52,7 @@ export class Player {
         } else if (this.game.controller.d.active) {
             input = "D";
         }
+        $("#text").text(input);
         if (input !== null) {
             let nextState = this.transitionTable[this.state][input];
             if (nextState) {
@@ -63,7 +64,7 @@ export class Player {
     update() {
         this.transitionState();
         this.draw();
-        $("#text").text(this.state);
+        // $("#text").text(this.state);
     }
 
     draw() {
