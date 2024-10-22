@@ -1,4 +1,4 @@
-class TileManager {
+export class TileManager {
     constructor(game) {
         
     }
