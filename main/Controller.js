@@ -1,3 +1,14 @@
+class ButtonInput {
+    constructor() {
+        this.active = this.down = false;
+    }
+
+    getInput(down) {
+        if (this.down !== down) this.active = down;
+        this.down = down;
+    }
+}
+
 export class Controller {
     constructor(game) {
         this.game = game;
@@ -30,16 +41,5 @@ export class Controller {
                 break;
         }
         button?.toggleClass("bg-gray-600/50", down);
-    }
-}
-
-class ButtonInput {
-    constructor() {
-        this.active = this.down = false;
-    }
-
-    getInput(down) {
-        if (this.down !== down) this.active = down;
-        this.down = down;
     }
 }
