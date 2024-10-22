@@ -10,8 +10,10 @@ export class Game {
         this.resize();
 
         this.map = new Map(this, 64, [
-            ["bg/ground.png"],
-            ["bg/ground.png"],
+            ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
+            ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
+            ["bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png"],
+            ["bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png"],
         ]);
 
         this.player = new Player(this);
@@ -48,10 +50,11 @@ export class Game {
     }
 
     resize() {
-        const gameAspectRatio = this.container.clientWidth / this.container.clientHeight;
-        const canvasAspectRatio = this.context.canvas.width / this.context.canvas.height;
+        const containerAspectRatio = this.container.clientWidth / this.container.clientHeight;
+        const canvasAspectRatio = this.buffer.canvas.width / this.buffer.canvas.height;
+        console.log(containerAspectRatio, canvasAspectRatio)
 
-        if (gameAspectRatio < canvasAspectRatio) {
+        if (containerAspectRatio < canvasAspectRatio) {
             this.context.canvas.height = this.container.clientHeight;
             this.context.canvas.width = this.container.clientHeight * canvasAspectRatio;
         } else {
@@ -59,8 +62,6 @@ export class Game {
             this.context.canvas.height = this.container.clientWidth / canvasAspectRatio;
         }
 
-        this.context.canvas.style.width = `${this.context.canvas.width}px`;
-        this.context.canvas.style.height = `${this.context.canvas.height}px`;
         this.context.imageSmoothingEnabled = false;
     }
 }
