@@ -46,7 +46,7 @@ export class Game {
 
     render() {
         this.map.draw();
-        this.player.draw();
+        this.player.update();
         this.context.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.context.canvas.width, this.context.canvas.height);
     }
 
