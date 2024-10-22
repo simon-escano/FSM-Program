@@ -4,11 +4,6 @@ import { Player } from "./Player.js";
 
 export class Game {
     constructor(container, canvas) {
-        this.container = container;
-        this.buffer = document.createElement("canvas").getContext("2d");
-        this.context = canvas.getContext("2d");
-        this.resize();
-
         this.map = new Map(this, 64, [
             ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
             ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
@@ -19,6 +14,11 @@ export class Game {
         this.player = new Player(this);
 
         this.controller = new Controller(this);
+
+        this.container = container;
+        this.buffer = document.createElement("canvas").getContext("2d");
+        this.context = canvas.getContext("2d");
+        this.resize();
     }
 
     start(fps = 60) {
@@ -46,13 +46,13 @@ export class Game {
 
     render() {
         this.map.draw();
+        this.player.draw();
         this.context.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.context.canvas.width, this.context.canvas.height);
     }
 
     resize() {
         const containerAspectRatio = this.container.clientWidth / this.container.clientHeight;
         const canvasAspectRatio = this.buffer.canvas.width / this.buffer.canvas.height;
-        console.log(containerAspectRatio, canvasAspectRatio)
 
         if (containerAspectRatio < canvasAspectRatio) {
             this.context.canvas.height = this.container.clientHeight;
@@ -61,6 +61,9 @@ export class Game {
             this.context.canvas.width = this.container.clientWidth;
             this.context.canvas.height = this.container.clientWidth / canvasAspectRatio;
         }
+
+        this.buffer.canvas.height = this.map.height;
+        this.buffer.canvas.width = this.map.width;
 
         this.context.imageSmoothingEnabled = false;
     }
