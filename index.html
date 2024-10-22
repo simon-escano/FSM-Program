@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,8 +7,31 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/seti.min.css">
+    <style>
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-thumb { transition: all 0.15s; background-color: rgba(14, 165, 233, 0.6); border-radius: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; border-radius: 4px; }
+        .CodeMirror {
+            font-size: 16px;
+            padding: 1rem;
+        }
+        .CodeMirror-gutter {
+            background-color: #151718;
+            padding-right: 1rem;
+        }
+    </style>
 </head>
-<body>
-    <script type="module" src="main/Game.js"></script>
+<body class="h-full p-6">
+    <div id="game" class="h-full w-full border border-zinc-700 rounded-xl shadow-xl overflow-hidden">
+        <canvas class="h-full w-full"></canvas>
+    </div>
+    <script type="module" src="main/Main.js"></script>
 </body>
 </html>
