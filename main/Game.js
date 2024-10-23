@@ -7,10 +7,10 @@ export class Game {
         this.controller = new Controller(this);
 
         this.map = new Map(this, 64, [
-            ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
-            ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
-            ["bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png"],
-            ["bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png"],
+            ["bg/sky-2.png", "bg/cloud-2_1.png", "bg/cloud-2_2.png", "bg/cloud-2_3.png", "bg/sky-2.png", "bg/cloud-2_1.png"],
+            ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
+            ["bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png"],
+            ["bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png"],
         ]);
 
         this.player = new Player(this);
@@ -21,6 +21,8 @@ export class Game {
         this.container = container;
         this.buffer = document.createElement("canvas").getContext("2d");
         this.context = canvas.getContext("2d");
+        this.buffer.canvas.height = this.map.height;
+        this.buffer.canvas.width = this.map.width;
         this.resize();
 
         $(window).on("keydown keyup", (event) => {
@@ -59,6 +61,7 @@ export class Game {
     }    
 
     resize() {
+        console.log("BRUHH");
         const containerAspectRatio = this.container.clientWidth / this.container.clientHeight;
         const canvasAspectRatio = this.buffer.canvas.width / this.buffer.canvas.height;
 

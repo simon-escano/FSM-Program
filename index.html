@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FSM Program</title>
+    <title>Modeling Sprite Animation Using Finite State Automata</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -14,6 +14,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/seti.min.css">
+
     <style>
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-thumb { transition: all 0.15s; background-color: rgba(14, 165, 233, 0.6); border-radius: 4px; }
@@ -28,13 +29,50 @@
         }
     </style>
 </head>
-<body class="h-full p-6">
-    <div class="">
-        
+<body class="font-sans h-full" style="font-family: 'Montserrat', sans-serif;">
+    <div class="flex flex-col w-full h-full bg-zinc-800 overflow-hidden">
+        <header class="flex w-full bg-zinc-700/25 h-full max-h-14 border-b border-zinc-700 px-4 py-3 gap-3">
+            <div class="flex rounded-md overflow-hidden shadow-lg">
+                <div class="h-full aspect-square bg-[url('./res/profile_pictures/ID_Picture.jpg')] bg-cover"></div>
+                <div class="flex flex-col justify-center px-4 py-3 bg-gradient-to-r from-sky-500 to-blue-500">
+                    <p class="text-zinc-50">Escaño, Simon Lyster P.</p>
+                </div>
+            </div>
+            <div class="flex rounded-md overflow-hidden shadow-lg bg-green-500 items-center px-2">
+                <p class="text-zinc-50 font-medium">CS313 | F3</p>
+            </div>
+        </header>
+        <main class="flex flex-1 p-4 gap-4 w-full overflow-y-auto">
+            <div class="flex flex-1 flex-col gap-3">
+                <div class="flex flex-wrap justify-between items-center gap-3 rounded-lg shadow-xl bg-zinc-700 p-6">
+                    <div class="flex flex-col">
+                        <h1 class="text-zinc-50 text-2xl font-semibold">Modeling Sprite Animation</h1>
+                        <p class="text-sm text-zinc-400">Using Finite State Automata</p>
+                    </div>
+                    <div class="flex h-full gap-2">
+                        <div id="sprint-btn" class="h-full cursor-pointer move-btn flex shadow-xl rounded-lg border-2 border-sky-500 bg-zinc-900/50 transition-all hover:bg-gray-700/50 active:bg-gray-600/50 px-8 py-2 items-center justify-center text-zinc-50">Shift</div>
+                        <div id="left-btn" class="h-full cursor-pointer move-btn flex shadow-xl rounded-lg border-2 border-sky-500 bg-zinc-900/50 transition-all hover:bg-gray-700/50 active:bg-gray-600/50 px-5 py-2 items-center justify-center text-zinc-50">A</div>
+                        <div id="right-btn" class="h-full cursor-pointer move-btn flex shadow-xl rounded-lg border-2 border-sky-500 bg-zinc-900/50 transition-all hover:bg-gray-700/50 active:bg-gray-600/50 px-5 py-2 items-center justify-center text-zinc-50">D</div>
+                        <div id="jump-btn" class="h-full cursor-pointer move-btn flex shadow-xl rounded-lg border-2 border-sky-500 bg-zinc-900/50 transition-all hover:bg-gray-700/50 active:bg-gray-600/50 px-8 py-2 items-center justify-center text-zinc-50">Space</div>
+                    </div>
+                </div>
+                <div id="game" class="flex flex-1 border border-zinc-700 rounded-xl shadow-xl overflow-hidden items-center justify-center">
+                    <canvas></canvas>
+                </div>
+            </div>
+            <div id="editor-container" class="flex flex-1 flex-col h-full max-w-[680px] rounded-xl overflow-hidden shadow-xl">
+                <div id="editor-header" class="flex w-full bg-zinc-700/25 border-b border-zinc-700 text-zinc-50">
+                    <p id="Player" class="selected-file transition-all rounded-t-xl cursor-pointer border-b-2 px-4 py-3 border-sky-500 hover:bg-zinc-700">Player.js</p>
+                    <p id="Player_nonFSM" class="unselected-file transition-all rounded-t-xl cursor-pointer border-b-2 px-4 py-3 border-transparent hover:bg-zinc-700">Player_nonFSM.js</p>
+                </div>
+                <div id="editor" class="flex flex-col flex-1"></div>
+            </div>
+        </main>
     </div>
-    <div id="game" class="flex h-full w-full border border-zinc-700 rounded-xl shadow-xl overflow-hidden items-center justify-center">
-        <canvas></canvas>
-    </div>
+
     <script type="module" src="main/Main.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>
 </body>
 </html>

@@ -86,7 +86,7 @@ export class Player {
         }
         this.tile.image.src = "./res/tiles/" + frames[this.imageIndex];
         this.frameCount = (this.frameCount || 0) + 1;
-        if (this.frameCount >= 5) {
+        if (this.frameCount >= (this.state.startsWith("SPRINT") ? 5 : 8)) {
             this.imageIndex = (this.imageIndex + 1) % frames.length;
             this.frameCount = 0;
         }
