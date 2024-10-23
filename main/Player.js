@@ -7,13 +7,11 @@ export class Player {
         this.height = 52;
         this.x = 64;
         this.y = 64;
-        this.state = "JUMP_RIGHT";
-        this.imageIndex = 0;
         this.walking_speed = 1.25;
         this.sprinting_speed = 2.5;
         this.velocity_x = 0;
         this.velocity_y = 0;
-
+        
         this.transitionTable = {
             "IDLE_LEFT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_LEFT", "No Input": "IDLE_LEFT" },
             "JUMP_LEFT": { "A": "JUMP_LEFT", "D": "JUMP_RIGHT", "Shift + A": "JUMP_LEFT", "Shift + D": "JUMP_RIGHT", "Space": "JUMP_LEFT", "No Input": "JUMP_LEFT" },
@@ -24,6 +22,7 @@ export class Player {
             "WALK_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" },
             "SPRINT_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" }
         };
+        this.state = "JUMP_RIGHT";
 
         this.images = {
             "IDLE_LEFT": ["player/idle-left.png"],
@@ -35,13 +34,9 @@ export class Player {
             "WALK_RIGHT": ["player/walk-right_1.png", "player/walk-right_2.png", "player/walk-right_3.png", "player/walk-right_2.png"],
             "SPRINT_RIGHT": ["player/sprint-right_1.png", "player/sprint-right_2.png", "player/sprint-right_3.png", "player/sprint-right_4.png", "player/sprint-right_5.png", "player/sprint-right_6.png"],
         };
-
         this.imageIndex = 0;
 
-        this.walking_speed = 0.125;
-        this.sprinting_speed = 0.25;
-        this.velocity_x = 0;
-        this.velocity_y = 0;
+        this.tile = new Tile(this.game, this.images[this.state][this.imageIndex]);
     }
 
     transitionState() {
@@ -98,4 +93,3 @@ export class Player {
         this.tile.draw(Math.round(this.x), Math.round(this.y), this.width, this.height);
     }
 }
-
