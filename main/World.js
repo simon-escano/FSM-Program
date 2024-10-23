@@ -1,30 +1,13 @@
-class Game {
-    constructor() {
-        this.world = new World();
-    }
+import { Player } from "./Player.js";
 
-    update() {
-        this.world.update();
-    }
-}
+export class World {
+    constructor(game, map, friction, gravity) {
+        this.game = game;
+        this.map = map;
+        this.player = new Player(this);
 
-class World {
-    constructor (friction = 0.9, gravity = 0.9) {
         this.friction = friction;
         this.gravity = gravity;
-        this.player = new Player(192, 64);
-        this.columns = 8;
-        this.rows = 5;
-        this.tile_size = 64;
-        this.map = [
-            34, 35, 35, 35, 34, 34, 35, 34,
-            31, 32, 33, 30, 31, 32, 33, 30,
-            29, 29, 29, 29, 29, 29, 29, 29,
-            26, 27, 28, 26, 27, 28, 26, 27,
-            25, 25, 25, 25, 25, 25, 25, 25,
-        ];
-        this.height = this.tile_size * this.rows;
-        this.width = this.tile_size * this.columns;
     }
 
     collideObject(object) {
@@ -37,12 +20,19 @@ class World {
             object.velocity_y = 0;
         }
     }
-    
+
     update() {
         this.player.velocity_y += this.gravity;
         this.player.update();
         this.player.velocity_x *= this.friction;
         this.player.velocity_y *= this.friction;
         this.collideObject(this.player);
+
+        this.draw();
+    }
+
+    draw() {
+        this.map.draw();
+        this.game.context.drawImage(this.game.buffer.canvas, 0, 0, this.game.buffer.canvas.width, this.game.buffer.canvas.height, 0, 0, this.game.context.canvas.width, this.game.context.canvas.height);
     }
 }
