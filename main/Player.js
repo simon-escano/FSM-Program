@@ -23,6 +23,14 @@ export class Player {
             "JUMP_RIGHT": { "A": "JUMP_LEFT", "D": "JUMP_RIGHT", "Shift + A": "JUMP_LEFT", "Shift + D": "JUMP_RIGHT", "Space": "JUMP_RIGHT", "No Input": "JUMP_RIGHT" },
             "WALK_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" },
             "SPRINT_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" }
+            "IDLE_LEFT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_LEFT", "No Input": "IDLE_LEFT" },
+            "JUMP_LEFT": { "A": "JUMP_LEFT", "D": "JUMP_RIGHT", "Shift + A": "JUMP_LEFT", "Shift + D": "JUMP_RIGHT", "Space": "JUMP_LEFT", "No Input": "JUMP_LEFT" },
+            "WALK_LEFT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_LEFT", "No Input": "IDLE_LEFT" },
+            "SPRINT_LEFT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_LEFT", "No Input": "IDLE_LEFT" },
+            "IDLE_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" },
+            "JUMP_RIGHT": { "A": "JUMP_LEFT", "D": "JUMP_RIGHT", "Shift + A": "JUMP_LEFT", "Shift + D": "JUMP_RIGHT", "Space": "JUMP_RIGHT", "No Input": "JUMP_RIGHT" },
+            "WALK_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" },
+            "SPRINT_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" }
         };
 
         this.images = {
@@ -36,7 +44,12 @@ export class Player {
             "SPRINT_RIGHT": ["player/sprint-right_1.png", "player/sprint-right_2.png", "player/sprint-right_3.png", "player/sprint-right_4.png", "player/sprint-right_5.png", "player/sprint-right_6.png"],
         };
 
-        this.tile = new Tile(this.game, this.images[this.state][0]);
+        this.imageIndex = 0;
+
+        this.walking_speed = 0.125;
+        this.sprinting_speed = 0.25;
+        this.velocity_x = 0;
+        this.velocity_y = 0;
     }
 
     transitionState() {
@@ -93,3 +106,4 @@ export class Player {
         this.tile.draw(Math.round(this.x), Math.round(this.y), this.width, this.height);
     }
 }
+

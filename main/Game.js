@@ -26,6 +26,10 @@ export class Game {
         $(window).on("keydown keyup", (event) => {
             this.controller.keyDownUp(event.type, event.keyCode);
         });
+
+        $(window).on("keydown keyup", (event) => {
+            this.controller.keyDownUp(event.type, event.keyCode);
+        });
     }
 
     start(fps = 60) {
@@ -66,8 +70,8 @@ export class Game {
             this.context.canvas.height = this.container.clientWidth / canvasAspectRatio;
         }
 
-        this.buffer.canvas.height = this.map.height;
-        this.buffer.canvas.width = this.map.width;
+        this.buffer.canvas.height = this.world.map.height;
+        this.buffer.canvas.width = this.world.map.width;
 
         this.context.imageSmoothingEnabled = false;
     }
