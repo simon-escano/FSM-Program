@@ -16,14 +16,14 @@ export class Player {
         this.direction = "RIGHT";
 
         this.images = {
-            "IDLE_LEFT": ["player/idle-left.png"],
-            "JUMP_LEFT": ["player/jump-left.png"],
-            "WALK_LEFT": ["player/walk-left_1.png", "player/walk-left_2.png", "player/walk-left_3.png", "player/walk-left_2.png"],
-            "SPRINT_LEFT": ["player/sprint-left_1.png", "player/sprint-left_2.png", "player/sprint-left_3.png", "player/sprint-left_4.png", "player/sprint-left_5.png", "player/sprint-left_6.png"],
-            "IDLE_RIGHT": ["player/idle-right.png"],
-            "JUMP_RIGHT": ["player/jump-right.png"],
-            "WALK_RIGHT": ["player/walk-right_1.png", "player/walk-right_2.png", "player/walk-right_3.png", "player/walk-right_2.png"],
-            "SPRINT_RIGHT": ["player/sprint-right_1.png", "player/sprint-right_2.png", "player/sprint-right_3.png", "player/sprint-right_4.png", "player/sprint-right_5.png", "player/sprint-right_6.png"],
+            "IDLE_LEFT": ["char/idle-left.png"],
+            "JUMP_LEFT": ["char/jump-left.png"],
+            "WALK_LEFT": ["char/walk-left_1.png", "char/walk-left_2.png", "char/walk-left_3.png", "char/walk-left_2.png"],
+            "SPRINT_LEFT": ["char/sprint-left_1.png", "char/sprint-left_2.png", "char/sprint-left_3.png", "char/sprint-left_4.png", "char/sprint-left_5.png", "char/sprint-left_6.png"],
+            "IDLE_RIGHT": ["char/idle-right.png"],
+            "JUMP_RIGHT": ["char/jump-right.png"],
+            "WALK_RIGHT": ["char/walk-right_1.png", "char/walk-right_2.png", "char/walk-right_3.png", "char/walk-right_2.png"],
+            "SPRINT_RIGHT": ["char/sprint-right_1.png", "char/sprint-right_2.png", "char/sprint-right_3.png", "char/sprint-right_4.png", "char/sprint-right_5.png", "char/sprint-right_6.png"],
         };
         this.imageIndex = 0;
 

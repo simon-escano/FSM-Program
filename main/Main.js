@@ -1,7 +1,7 @@
 import { Game } from "./Game.js";
 
 $(document).ready(function () {
-    let game = new Game($("#game")[0], $("canvas")[0], 0.9, 0.9);
+    let game = new Game($("#game")[0], $("canvas")[0], 0.9, 0.85);
     game.start();
 
     loadCode("main/Player.js");

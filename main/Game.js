@@ -49,15 +49,13 @@ export class Game {
     }
 
     update() {
-        this.map.draw();
-
         this.player.velocity_y += this.gravity;
+        this.context.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.map.draw();
         this.player.update();
         this.player.velocity_x *= this.friction;
         this.player.velocity_y *= this.friction;
         this.collideObject(this.player);
-
-        this.context.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.context.canvas.width, this.context.canvas.height);
     }    
 
     resize() {
@@ -91,7 +89,7 @@ export class Game {
             object.y = 0;
             object.velocity_y = 0;
         } else if (object.y + object.height > this.map.height - this.map.tileSize) {
-            if (object.state.split("_")[0] === "JUMP") {
+            if (object.state.split("_")[0] === "FALL") {
                 object.changeState("IDLE_" + object.state.split("_")[1]);
             }
             object.y = this.map.height - object.height - this.map.tileSize;
