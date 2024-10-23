@@ -1,24 +1,26 @@
-import { Map } from "./Map.js";
 import { Controller } from "./Controller.js";
-import { Player } from "./Player.js";
+import { World } from "./World.js";
+import { Map } from "./Map.js";
 
 export class Game {
     constructor(container, canvas) {
-        this.map = new Map(this, 64, [
+        this.controller = new Controller(this);
+
+        this.world = new World(this, new Map(this, 64, [
             ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
             ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
             ["bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png"],
             ["bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png"],
-        ]);
-
-        this.player = new Player(this);
-
-        this.controller = new Controller(this);
+        ]), 0.9, 0.9);
 
         this.container = container;
         this.buffer = document.createElement("canvas").getContext("2d");
         this.context = canvas.getContext("2d");
         this.resize();
+
+        $(window).on("keydown keyup", (event) => {
+            this.controller.keyDownUp(event.type, event.keyCode);
+        });
     }
 
     start(fps = 60) {
@@ -32,7 +34,6 @@ export class Game {
             }
             this.animationFrameRequest = window.requestAnimationFrame(loop);
         };
-    
         this.animationFrameRequest = window.requestAnimationFrame(loop);
     }
     
@@ -41,13 +42,7 @@ export class Game {
     }
 
     update() {
-        this.render()
-    }
-
-    render() {
-        this.map.draw();
-        this.player.update();
-        this.context.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.context.canvas.width, this.context.canvas.height);
+        this.world.update();
     }
 
     resize() {
@@ -62,8 +57,8 @@ export class Game {
             this.context.canvas.height = this.container.clientWidth / canvasAspectRatio;
         }
 
-        this.buffer.canvas.height = this.map.height;
-        this.buffer.canvas.width = this.map.width;
+        this.buffer.canvas.height = this.world.map.height;
+        this.buffer.canvas.width = this.world.map.width;
 
         this.context.imageSmoothingEnabled = false;
     }
