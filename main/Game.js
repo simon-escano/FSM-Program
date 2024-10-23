@@ -1,17 +1,22 @@
 import { Controller } from "./Controller.js";
-import { World } from "./World.js";
+import { Player } from "./Player.js";
 import { Map } from "./Map.js";
 
 export class Game {
-    constructor(container, canvas) {
+    constructor(container, canvas, friction, gravity) {
         this.controller = new Controller(this);
 
-        this.world = new World(this, new Map(this, 64, [
+        this.map = new Map(this, 64, [
             ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
             ["bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png", "bg/sky-3.png"],
             ["bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png", "bg/grass_3.png", "bg/grass_1.png", "bg/grass_2.png"],
             ["bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png", "bg/ground.png"],
-        ]), 0.9, 0.9);
+        ]);
+
+        this.player = new Player(this);
+
+        this.friction = friction;
+        this.gravity = gravity;
 
         this.container = container;
         this.buffer = document.createElement("canvas").getContext("2d");
@@ -36,14 +41,18 @@ export class Game {
         };
         this.animationFrameRequest = window.requestAnimationFrame(loop);
     }
-    
-    stop() {
-        window.cancelAnimationFrame(this.animationFrameRequest);
-    }
 
     update() {
-        this.world.update();
-    }
+        this.map.draw();
+
+        this.player.velocity_y += this.gravity;
+        this.player.update();
+        this.player.velocity_x *= this.friction;
+        this.player.velocity_y *= this.friction;
+        this.collideObject(this.player);
+
+        this.context.drawImage(this.buffer.canvas, 0, 0, this.buffer.canvas.width, this.buffer.canvas.height, 0, 0, this.context.canvas.width, this.context.canvas.height);
+    }    
 
     resize() {
         const containerAspectRatio = this.container.clientWidth / this.container.clientHeight;
@@ -57,9 +66,30 @@ export class Game {
             this.context.canvas.height = this.container.clientWidth / canvasAspectRatio;
         }
 
-        this.buffer.canvas.height = this.world.map.height;
-        this.buffer.canvas.width = this.world.map.width;
+        this.buffer.canvas.height = this.map.height;
+        this.buffer.canvas.width = this.map.width;
 
         this.context.imageSmoothingEnabled = false;
+    }
+
+    collideObject(object) {
+        if (object.x < 0) {
+            object.x = 0;
+            object.velocity_x = 0;
+        } else if (object.x + object.width > this.map.width) {
+            object.x = this.map.width - object.width;
+            object.velocity_x = 0;
+        }
+
+        if (object.y < 0) {
+            object.y = 0;
+            object.velocity_y = 0;
+        } else if (object.y + object.height > this.map.height - this.map.tileSize) {
+            if (object.state.split("_")[0] === "JUMP") {
+                object.changeState("IDLE_" + object.state.split("_")[1]);
+            }
+            object.y = this.map.height - object.height - this.map.tileSize;
+            object.velocity_y = 0;
+        }
     }
 }
