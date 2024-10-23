@@ -21,6 +21,30 @@ $(document).ready(function () {
         $("#Player_nonFSM").removeClass("border-transparent").addClass("border-sky-500");
         loadCode("main/Player_nonFSM.js");
     });
+
+    $("#sprint-btn").mousedown(() => {
+        game.controller.keyDownUp("keydown", 16);
+    }).mouseup(() => {
+        game.controller.keyDownUp("keyup", 16);
+    });
+
+    $("#left-btn").mousedown(() => {
+        game.controller.keyDownUp("keydown", 65);
+    }).mouseup(() => {
+        game.controller.keyDownUp("keyup", 65);
+    });
+
+    $("#right-btn").mousedown(() => {
+        game.controller.keyDownUp("keydown", 68);
+    }).mouseup(() => {
+        game.controller.keyDownUp("keyup", 68);
+    });
+
+    $("#jump-btn").mousedown(() => {
+        game.controller.keyDownUp("keydown", 32);
+    }).mouseup(() => {
+        game.controller.keyDownUp("keyup", 32); 
+    });
 });
 
 function resizeCodeMirror(editor) {
