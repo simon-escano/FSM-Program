@@ -58,8 +58,9 @@
                         <div id="jump-btn" class="h-full cursor-pointer move-btn flex shadow-xl rounded-lg border-2 border-sky-500 bg-zinc-900/50 transition-all hover:bg-gray-700/50 active:bg-gray-600/50 px-8 py-2 items-center justify-center text-zinc-50">Space</div>
                     </div>
                 </div>
-                <div id="game" class="flex flex-1 border border-zinc-700 rounded-xl shadow-xl overflow-hidden items-center justify-center">
+                <div id="game" class="flex flex-1 border border-zinc-700 rounded-xl shadow-xl overflow-hidden items-center justify-center relative">
                     <canvas></canvas>
+                    <p id="state" class="px-6 py-2 text-zinc-800 font-medium absolute top-4 right-4 rounded-lg text-2xl shadow-xl border-2 border-zinc-700"></p>
                 </div>
             </div>
             <div id="editor-container" class="flex flex-1 flex-col h-full max-w-[680px] rounded-xl overflow-hidden shadow-xl">
@@ -73,6 +74,10 @@
     </div>
 
     <script type="module" src="main/Main.js"></script>
+
+    <script>
+        
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.0/mode/javascript/javascript.min.js"></script>

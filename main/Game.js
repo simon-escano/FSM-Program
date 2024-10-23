@@ -61,7 +61,6 @@ export class Game {
     }    
 
     resize() {
-        console.log("BRUHH");
         const containerAspectRatio = this.container.clientWidth / this.container.clientHeight;
         const canvasAspectRatio = this.buffer.canvas.width / this.buffer.canvas.height;
 

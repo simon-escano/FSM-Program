@@ -70,6 +70,33 @@ export class Player {
             this.imageIndex = 0;
         }
         this.state = state || this.state;
+        $("#state").text(this.state);
+        switch (this.state) {
+            case "IDLE_LEFT":
+                $("#state").css("background-color", "#dd7e6b");
+                break;
+            case "JUMP_LEFT":
+                $("#state").css("background-color", "#ea9999");
+                break;
+            case "WALK_LEFT":
+                $("#state").css("background-color", "#f9cb9c");
+                break;
+            case "SPRINT_LEFT":
+                $("#state").css("background-color", "#ffe599");
+                break;
+            case "IDLE_RIGHT":
+                $("#state").css("background-color", "#a2c4c9");
+                break;
+            case "JUMP_RIGHT":
+                $("#state").css("background-color", "#a4c2f4");
+                break;
+            case "WALK_RIGHT":
+                $("#state").css("background-color", "#b4a7d6");
+                break;
+            case "SPRINT_RIGHT":
+                $("#state").css("background-color", "#d5a6bd");
+                break;
+        }
     }
 
     update() {
