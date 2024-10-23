@@ -13,7 +13,7 @@ export class Player {
         this.velocity_y = 0;
         this.isJumping = false;
         this.isSprinting = false;
-        this.direction = "RIGHT"; // or "LEFT"
+        this.direction = "RIGHT";
 
         this.images = {
             "IDLE_LEFT": ["player/idle-left.png"],
