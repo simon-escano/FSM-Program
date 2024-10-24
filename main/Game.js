@@ -28,10 +28,6 @@ export class Game {
         $(window).on("keydown keyup", (event) => {
             this.controller.keyDownUp(event.type, event.keyCode);
         });
-
-        $(window).on("keydown keyup", (event) => {
-            this.controller.keyDownUp(event.type, event.keyCode);
-        });
     }
 
     start(fps = 60) {

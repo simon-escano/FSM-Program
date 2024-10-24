@@ -22,7 +22,7 @@ export class Player {
             "JUMP_RIGHT": { "A": "JUMP_LEFT", "D": "JUMP_RIGHT", "Shift + A": "JUMP_LEFT", "Shift + D": "JUMP_RIGHT", "Space": "JUMP_RIGHT", "No Input": "JUMP_RIGHT" },
             "FALL_RIGHT": { "A": "FALL_LEFT", "D": "FALL_RIGHT", "Shift + A": "FALL_LEFT", "Shift + D": "FALL_RIGHT", "Space": "FALL_RIGHT", "No Input": "FALL_RIGHT" },
             "WALK_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" },
-            "SPRINT_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" }
+            "SPRINT_RIGHT": { "A": "WALK_LEFT", "D": "WALK_RIGHT", "Shift + A": "SPRINT_LEFT", "Shift + D": "SPRINT_RIGHT", "Space": "JUMP_RIGHT", "No Input": "IDLE_RIGHT" },
         };
         
         this.state = "FALL_RIGHT";
@@ -35,11 +35,14 @@ export class Player {
             "SPRINT_LEFT": ["char/sprint-left_1.png", "char/sprint-left_2.png", "char/sprint-left_3.png", "char/sprint-left_4.png", "char/sprint-left_5.png", "char/sprint-left_6.png"],
             "IDLE_RIGHT": ["char/idle-right.png"],
             "JUMP_RIGHT": ["char/jump-right_1.png", "char/jump-right_2.png"],
+            "FALL_RIGHT": ["char/fall-right_1.png", "char/fall-right_2.png"],
             "WALK_RIGHT": ["char/walk-right_1.png", "char/walk-right_2.png", "char/walk-right_3.png", "char/walk-right_2.png"],
             "SPRINT_RIGHT": ["char/sprint-right_1.png", "char/sprint-right_2.png", "char/sprint-right_3.png", "char/sprint-right_4.png", "char/sprint-right_5.png", "char/sprint-right_6.png"],
-            "FALL_RIGHT": ["char/fall-right_1.png", "char/fall-right_2.png"]
         };
         this.imageIndex = 0;
+
+        this.transitionCounter = 0;
+        this.lastTransition = null;
 
         this.tile = new Tile(this.game, this.images[this.state][this.imageIndex]);
     }
@@ -72,14 +75,37 @@ export class Player {
             this.velocity_x += this.walking_speed;
         }
 
-        this.changeState(this.transitionTable[this.state][input]);
+        if (this.state.includes("TRANSITION")) {
+            this.changeState(this.state);
+        } else {
+            this.changeState(this.transitionTable[this.state][input]);
+        }
     }
 
     changeState(state) {
         if (this.state !== state) {
+            if (!this.state.startsWith("FALL") && !this.state.startsWith("JUMP")) {
+                if (this.state.split("_")[1] === "LEFT" && state.split("_")[1] === "RIGHT") {
+                    this.state = this.state.split("_")[0] + "_TRANSITION_RIGHT";
+                    this.lastTransition = state;
+                } else if (this.state.split("_")[1] === "RIGHT" && state.split("_")[1] === "LEFT") {
+                    this.state = this.state.split("_")[0] + "_TRANSITION_LEFT";
+                    this.lastTransition = state;
+                }
+            }
             this.imageIndex = 0;
         }
-        this.state = state || this.state;
+
+        if (this.state.includes("TRANSITION")) {
+            this.transitionCounter++;
+            if (this.transitionCounter > 5) {
+                this.state = this.lastTransition;
+                this.transitionCounter = 0;
+            }
+        } else {
+            this.state = state || this.state;
+        }
+
         $("#state").text(this.state);
         switch (this.state) {
             case "IDLE_LEFT":
@@ -87,6 +113,9 @@ export class Player {
                 break;
             case "JUMP_LEFT":
                 $("#state").css("background-color", "#ea9999");
+                break;
+            case "FALL_LEFT":
+                $("#state").css("background-color", "#f4cccc");
                 break;
             case "WALK_LEFT":
                 $("#state").css("background-color", "#f9cb9c");
@@ -99,6 +128,9 @@ export class Player {
                 break;
             case "JUMP_RIGHT":
                 $("#state").css("background-color", "#a4c2f4");
+                break;
+            case "FALL_RIGHT":
+                $("#state").css("background-color", "#9fc5e8");
                 break;
             case "WALK_RIGHT":
                 $("#state").css("background-color", "#b4a7d6");
@@ -123,14 +155,18 @@ export class Player {
 
     draw() {
         const frames = this.images[this.state];
-        if (this.imageIndex >= frames.length) {
-            this.imageIndex = 0;
-        }
-        this.tile.image.src = "./res/tiles/" + frames[this.imageIndex];
-        this.frameCount = (this.frameCount || 0) + 1;
-        if (this.frameCount >= (this.state.startsWith("SPRINT") ? 5 : 8)) {
-            this.imageIndex = (this.imageIndex + 1) % frames.length;
-            this.frameCount = 0;
+        if (this.state.includes("TRANSITION")) {
+            this.tile.image.src = "./res/tiles/char/" + this.state.split("_")[0].toLowerCase() + "-transition-" + this.state.split("_")[2].toLowerCase() + ".png";
+        } else {
+            if (this.imageIndex >= frames.length) {
+                this.imageIndex = 0;
+            }
+            this.tile.image.src = "./res/tiles/" + frames[this.imageIndex];
+            this.frameCount = (this.frameCount || 0) + 1;
+            if (this.frameCount >= (this.state.startsWith("SPRINT") ? 4 : 7)) {
+                this.imageIndex = (this.imageIndex + 1) % frames.length;
+                this.frameCount = 0;
+            }
         }
         this.tile.draw(Math.round(this.x), Math.round(this.y), this.width, this.height);
     }
